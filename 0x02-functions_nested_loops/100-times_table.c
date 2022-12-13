@@ -1,31 +1,53 @@
-#include <stdio.h>
+#include "main.h"
 
 /**
- * main - prints all possible different combinations of two digits.
- * Return: Always 0 (Success)
- */
-
-int main(void)
+  * print_times_table - Prints a multiplication table up to param
+  * @n: The number to be treated
+  *
+  * Return: Number matrix
+  */
+void print_times_table(int n)
 {
-	int ones = '0';
-	int tens = '0';
 
-	for (tens = '0'; tens <= '9'; tens++)/* prints ten digits*/
+
+	int x, y, z;
+
+	if (n >= 0 && n <= 14)
 	{
-		for (ones = '0'; ones <= '9'; ones++)/* prints one digit*/
+		for (x = 0; x <= n; x++)
 		{
-			if (!((ones == tens) || (tens > ones)))/*this removes repitition*/
+			for (y = 0; y <= n; y++)
 			{
-				putchar(tens);
-				putchar(ones);
-				if (!(ones == '9' && tens == '8'))/*this adds commas and spaces*/
+				z = x * y;
+				if (z > 99)
 				{
-					putchar(',');
-					putchar(' ');
+					_putchar(',');
+					_putchar(32);
+					_putchar((z / 100) + '0');
+					_putchar(((z / 10) % 10) + '0');
+					_putchar((z % 10) + '0');
+				}
+				else if (z > 9)
+				{
+					_putchar(',');
+					_putchar(32);
+					_putchar(32);
+					_putchar(((z / 10) % 10) + '0');
+					_putchar((z % 10) + '0');
+				}
+				else
+				{
+					if (y != 0)
+					{
+						_putchar(',');
+						_putchar(32);
+						_putchar(32);
+						_putchar(32);
+					}
+					_putchar(z + '0');
 				}
 			}
+			_putchar('\n');
 		}
 	}
-	putchar('\n');
-	return (0);
 }

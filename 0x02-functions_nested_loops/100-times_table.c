@@ -1,46 +1,31 @@
-include "main.h"
+#include <stdio.h>
 
 /**
- * print_times_table - Prints the n times table
- *
- * @n: number times table (0 < n <= 15)
- *
- * Return: no return
+ * main - prints all possible different combinations of two digits.
+ * Return: Always 0 (Success)
  */
-void print_times_table(int n)
-{
-	int a, b, op;
 
-	if (n >= 0 && n <= 15)
+int main(void)
+{
+	int ones = '0';
+	int tens = '0';
+
+	for (tens = '0'; tens <= '9'; tens++)/* prints ten digits*/
 	{
-		for (a = 0; a <= n; a++)
+		for (ones = '0'; ones <= '9'; ones++)/* prints one digit*/
 		{
-			_putchar(48);
-			for (b = 1; b <= n; b++)
+			if (!((ones == tens) || (tens > ones)))/*this removes repitition*/
 			{
-				op = a * b;
-				_putchar(44);
-				_putchar(32);
-				if (op <= 9)
+				putchar(tens);
+				putchar(ones);
+				if (!(ones == '9' && tens == '8'))/*this adds commas and spaces*/
 				{
-					_putchar(32);
-					_putchar(32);
-					_putchar(op + 48);
-				}
-				else if (op <= 99)
-				{
-					_putchar(32);
-					_putchar((op / 10) + 48);
-					_putchar((op % 10) + 48);
-				}
-				else
-				{
-					_putchar(((op / 100) % 10) + 48);
-					_putchar(((op / 10) % 10) + 48);
-					_putchar((op % 10) + 48);
+					putchar(',');
+					putchar(' ');
 				}
 			}
-			_putchar('\n');
 		}
 	}
+	putchar('\n');
+	return (0);
 }

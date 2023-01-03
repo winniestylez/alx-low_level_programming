@@ -1,33 +1,35 @@
 #include "main.h"
 
 /**
- * _strspn - Entry point
- * @s: input
- * @accept: input
- * Return: Always 0 (Success)
- */
-unsigned int _strspn(char *s, char *accept)
+  * _strstr - locate a substring
+  * @haystack: the string to search
+  * @needle: the string to find
+  *
+  * Return: char value
+  */
+char *_strstr(char *haystack, char *needle)
 {
-	unsigned int i, n, value, check;
+	int a = 0, b = 0;
 
-	value = 0;
-
-	for (i = 0; s[i] != '\0'; i++)
+	while (haystack[a])
 	{
-		check = 0;
-
-		for (n = 0; accept[n] != '\0'; n++)
+		while (needle[b])
 		{
-			if (accept[n] == s[i])
+			if (haystack[a + b] != needle[b])
 			{
-				value++;
-				check = 1;
+				break;
 			}
+
+			b++;
 		}
 
-				if (check == 0)
-			return (value);
+		if (needle[b] == '\0')
+		{
+			return (haystack + a);
+		}
+
+		a++;
 	}
 
-	return (value);
+	return ('\0');
 }

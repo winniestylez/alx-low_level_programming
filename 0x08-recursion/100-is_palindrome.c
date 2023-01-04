@@ -1,38 +1,35 @@
-#include <stdio.h>
- #include <string.h>
- 
- 
-int checkpalindrome(char *s)
+#include "main.h"
+int lengthc(char *s);
+int palindrome(char str[], int st, int end);
+/**
+ * is_palindrome - Entry Point
+ * @s: input
+ * Return: 0
+ */
+int is_palindrome(char *s)
 {
-    static int i,c=0,n=strlen(s);
-    if(i<n/2)
-    {
-         if(s[i]==s[n-i-1])
-    	c++;
-    	i++;
-    	checkpalindrome(s);
-	}
-	else
-	{
-		if(c==i)
-        return 1;
-        else
-        return 0;
-	}
- 	 
- 	
+	int len;
+
+	len = lengthc(s);
+
+	if (len == 0)
+		return (1);
+	return (palindrome(s, 0, len - 1));
 }
-int main()
+
+/**
+ * lengthc - finds the length count
+ * @s: input
+ * Return: length size
+ */
+int lengthc(char *s)
 {
-    char s[1000];  
-   
-    printf("Enter  the string: ");
-    gets(s);
-    
- 
-    if(checkpalindrome(s))
- 	    printf("string is palindrome");
-    else
-        printf("string is not palindrome");
- 
- }
+
+	if (st >= end)
+		return (1);
+	if (str[st] != str[end])
+		return (0);
+	if (st <= end || st < end + 1)
+		return (palindrome(str, st + 1, end - 1));
+	return (1);
+}

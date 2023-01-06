@@ -1,0 +1,6 @@
+#!/bin/bash
+
+for file in *.C; do
+	gcc -C "$file"
+	ar -rcs libmy.a "${file%.C}.o"
+done \

@@ -1,61 +1,32 @@
 #include "lists.h"
-#include <stdlib.h>
-#include <stdio.h>
 
 /**
-* _r - reallocates memory for an array of pointers
-* to the nodes in a linked list
-* @list: the old list to append
-* @size: size of the new list (always one more than the old list)
-* @new: new node to add to the list
-*
-* Return: pointer to the new list
-*/
-const listint_t **_r(const listint_t **list, size_t size, const listint_t *new)
+ * find_listint_loop - finds the loop in a linked list.
+ * @head: pointer to the beginning of the list
+ *
+ * Return: address of the node where the loop starts or NULL if there's no loop
+ */
+listint_t *find_listint_loop(listint_t *head)
 {
-const listint_t **newlist;
-size_t i;
+	listint_t *tortoise, *hare;
 
-newlist = malloc(size * sizeof(listint_t *));
-if (newlist == NULL)
-{
-free(list);
-exit(98);
-}
-for (i = 0; i < size - 1; i++)
-newlist[i] = list[i];
-newlist[i] = new;
-free(list);
-return (newlist);
-}
-
-/**
-* print_listint_safe - prints a listint_t linked list.
-* @head: pointer to the start of the list
-*
-* Return: the number of nodes in the list
-*/
-size_t print_listint_safe(const listint_t *head)
-{
-size_t i, num = 0;
-const listint_t **list = NULL;
-
-while (head != NULL)
-{
-for (i = 0; i < num; i++)
-{
-if (head == list[i])
-{
-printf("-> [%p] %d\n", (void *)head, head->n);
-free(list);
-return (num);
-}
-}
-num++;
-list = _r(list, num, head);
-printf("[%p] %d\n", (void *)head, head->n);
-head = head->next;
-}
-free(list);
-return (num);
+	tortoise = hare = head;
+	while (tortoise && hare && hare->next)
+	{
+		tortoise = tortoise->next;
+		hare = hare->next->next;
+		if (tortoise == hare)
+		{
+			tortoise = head;
+			break;
+		}
+	}
+	if (!tortoise || !hare || !hare->next)
+		return (NULL);
+	while (tortoise != hare)
+	{
+		tortoise = tortoise->next;
+		hare = hare->next;
+	}
+	return (hare);
 }

@@ -1,28 +1,29 @@
-#include "main.h"
+#ifndef MAIN_H
+#define MAIN_N
+
+#include <elf.h>
+#include <stdlib.h>
+#include <stdio.h>
+#include <unistd.h>
+#include <fcntl.h>
+#include <sys/types.h>
+#include <sys/stat.h>
+
+ssize_t read_textfile(const char *filename, size_t letters);
+int create_file(const char *filename, char *text_content);
+int append_text_to_file(const char *filename, char *text_content);
 
 /**
- * * append_text_to_file - appends text at the end of a file
- * * @filename: file to append the text to
- * * @text_content: content to append into the file
- * *
- * * Return: 1 on success and -1 on failure
+ *  * ELF header functions
 */
-int append_text_to_file(const char *filename, char *text_content)
-{
-int fd, a, b = 0;
-if (!filename)
-return (-1);
-fd = open(filename, O_WRONLY | O_APPEND);
-if (fd < 0)
-return (-1);
-if (text_content)
-{
-while (text_content[b])
-b++;
-a = write(fd, text_content, b);
-if (a != b)
-return (-1);
-}
-close(fd);
-return (1);
-}
+void check_elf(unsigned char *e_ident);
+void print_magic(unsigned char *e_ident);
+void print_class(unsigned char *e_ident);
+void print_data(unsigned char *e_ident);
+void print_version(unsigned char *e_ident);
+void print_abi(unsigned char *e_ident);
+void print_osabi(unsigned char *e_ident);
+void print_type(unsigned int e_type, unsigned char *e_ident);
+void print_entry(unsigned long int e_entry, unsigned char *e_ident);
+void close_elf(int elf);
+#endif

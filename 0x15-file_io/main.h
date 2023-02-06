@@ -1,34 +1,28 @@
 #include "main.h"
 
 /**
- *  * read_textfile - read a text file
- *   * @filename: name of a text file
- *    * @letters: size
- *     * Return: the actual number of letters it could read and print
- *      * On error, 0 is returned.
+ * * append_text_to_file - appends text at the end of a file
+ * * @filename: file to append the text to
+ * * @text_content: content to append into the file
+ * *
+ * * Return: 1 on success and -1 on failure
 */
-
-ssize_t read_textfile(const char *filename, size_t letters)
+int append_text_to_file(const char *filename, char *text_content)
 {
-int file, letters2 = 0;
-char *buff;
-
-
+int fd, a, b = 0;
 if (!filename)
-return (0);
-
-buff = malloc((letters + 1) * sizeof(char));
-if (buff == NULL)
-return (0);
-
-buff[letters] = '\0';
-file = open(filename, O_RDONLY);
-if (file == -1)
-return (0);
-
-letters2 =  read(file, buff, letters);
-write(STDOUT_FILENO, buff, letters2);
-close(file);
-free(buff);
-return (letters2);
+return (-1);
+fd = open(filename, O_WRONLY | O_APPEND);
+if (fd < 0)
+return (-1);
+if (text_content)
+{
+while (text_content[b])
+b++;
+a = write(fd, text_content, b);
+if (a != b)
+return (-1);
+}
+close(fd);
+return (1);
 }
